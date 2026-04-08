@@ -81,7 +81,7 @@ export default function HomeScreen() {
           />
         )}
       />
-      <FloatingActionButton onPress={() => router.push('/(tabs)/transactions')} />
+      <FloatingActionButton onPress={() => router.push('/add-transaction')} />
     </View>
   );
 }
