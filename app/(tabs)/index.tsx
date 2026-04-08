@@ -9,12 +9,17 @@ import { SummaryCards } from '../../components/transactions/SummaryCards';
 import { ExpenseChart } from '../../components/transactions/ExpenseChart';
 import { FloatingActionButton } from '../../components/ui/FloatingActionButton';
 import { CategoryChip } from '../../components/ui/CategoryChip';
+import { NotificationBell } from '../../components/ui/NotificationBell';
+import { useAuthStore } from '../../store/authStore';
 
 export default function HomeScreen() {
   const router = useRouter();
   const isDark = (useColorScheme() ?? 'dark') === 'dark';
   const theme = isDark ? TOKENS.colors.dark : TOKENS.colors.light;
   
+  const { user } = useAuthStore();
+  const firstName = user?.user_metadata?.full_name?.split(' ')[0] || 'User';
+
   const transactions = useExpenseStore((state) => state.getCurrentMonthTransactions());
   const categories = useExpenseStore((state) => state.categories);
   const deleteTransaction = useExpenseStore((state) => state.deleteTransaction);
@@ -35,6 +40,14 @@ export default function HomeScreen() {
         contentContainerStyle={styles.listContent}
         ListHeaderComponent={
           <>
+            <View style={styles.topHeader}>
+              <View>
+                <Text style={[styles.welcomeText, { color: theme.secondary }]}>Welcome back,</Text>
+                <Text style={[styles.userName, { color: theme.primary }]}>{firstName}</Text>
+              </View>
+              <NotificationBell />
+            </View>
+
             <GradientCard />
             <SummaryCards />
             <ExpenseChart />
@@ -93,6 +106,20 @@ const styles = StyleSheet.create({
   listContent: {
     padding: TOKENS.spacing.xl,
     paddingBottom: 100, // padding for tabs + FAB
+  },
+  topHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: TOKENS.spacing.xl,
+    paddingTop: TOKENS.spacing.md,
+  },
+  welcomeText: {
+    ...TOKENS.typography.caption,
+  },
+  userName: {
+    ...TOKENS.typography.subheading,
+    fontWeight: '700',
   },
   filterContainer: {
     marginHorizontal: -TOKENS.spacing.xl, // Bleed scroll edge
