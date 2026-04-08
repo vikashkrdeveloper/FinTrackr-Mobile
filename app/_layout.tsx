@@ -30,6 +30,16 @@ export default function RootLayout() {
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="(auth)" options={{ animation: 'fade' }} />
         <Stack.Screen name="(tabs)" options={{ animation: 'fade' }} />
+        <Stack.Screen 
+          name="add-transaction" 
+          options={{ 
+            presentation: 'modal',
+            headerShown: true,
+            title: 'Add Transaction',
+            headerStyle: { backgroundColor: colorScheme === 'dark' ? '#000000' : '#FFFFFF' },
+            headerTintColor: colorScheme === 'dark' ? '#FFFFFF' : '#000000',
+          }} 
+        />
       </Stack>
     </>
   );
