@@ -114,7 +114,7 @@ export default function HistoryScreen() {
         contentContainerStyle={styles.listContent}
         ListEmptyComponent={
           <View style={styles.emptyState}>
-            <MaterialCommunityIcons name="tray-blank" size={48} color={theme.surfaceLighter} />
+            <MaterialCommunityIcons name="tray" size={48} color={theme.surfaceLighter} />
             <Text style={[styles.emptyText, { color: theme.secondary }]}>No transactions found</Text>
           </View>
         }
