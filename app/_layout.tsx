@@ -17,10 +17,10 @@ export default function RootLayout() {
 
     if (!session && !inAuthGroup) {
       // Redirect to login if not authenticated and not in auth group
-      router.replace('/(auth)/login');
+      router.replace('/(auth)/login' as any);
     } else if (session && inAuthGroup) {
       // Redirect to home if authenticated and in auth group
-      router.replace('/(tabs)');
+      router.replace('/(tabs)' as any);
     }
   }, [session, initialized, segments, router]);
 

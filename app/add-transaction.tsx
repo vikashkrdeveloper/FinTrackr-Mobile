@@ -14,11 +14,11 @@ import {
 import { useRouter } from 'expo-router';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useExpenseStore } from '../../store/expenseStore';
-import { TOKENS } from '../../theme/tokens';
-import { InputField } from '../../components/ui/InputField';
-import { CategoryChip } from '../../components/ui/CategoryChip';
-import { PrimaryButton } from '../../components/ui/PrimaryButton';
+import { useExpenseStore } from '../store/expenseStore';
+import { TOKENS } from '../theme/tokens';
+import { InputField } from '../components/ui/InputField';
+import { CategoryChip } from '../components/ui/CategoryChip';
+import { PrimaryButton } from '../components/ui/PrimaryButton';
 
 const PREDEFINED_COLORS = ['#EF4444', '#F97316', '#F59E0B', '#10B981', '#06B6D4', '#3B82F6', '#8B5CF6', '#D946EF'];
 const PREDEFINED_ICONS = ['wallet', 'airplane', 'shopping', 'food', 'medical-bag', 'gas-station', 'home', 'star', 'book', 'gamepad-variant'];
@@ -62,7 +62,7 @@ export default function TransactionsScreen() {
     setAmount('');
     setNote('');
     setDate(new Date());
-    router.navigate('/(tabs)');
+    router.replace('/(tabs)');
   };
 
   const handleSaveCategory = () => {

@@ -13,11 +13,11 @@ export const exportTransactionsToCSV = async (transactions: Transaction[], categ
 
   const csvContent = header + rows;
   const fileName = `FinTrackr_Export_${new Date().getTime()}.csv`;
-  const fileUri = (FileSystem.documentDirectory || '') + fileName;
+  const fileUri = ((FileSystem as any).documentDirectory ?? '') + fileName;
 
   try {
     await FileSystem.writeAsStringAsync(fileUri, csvContent, {
-      encoding: FileSystem.EncodingType.UTF8,
+      encoding: (FileSystem as any).EncodingType.UTF8,
     });
 
     if (await Sharing.isAvailableAsync()) {

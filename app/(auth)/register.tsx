@@ -37,7 +37,7 @@ export default function RegisterScreen() {
       Alert.alert('Registration Error', error.message);
     } else {
       Alert.alert('Success', 'Check your email for confirmation!');
-      router.replace('/(auth)/login');
+      router.replace('/(auth)/login' as any);
     }
     setLoading(false);
   };
@@ -90,7 +90,7 @@ export default function RegisterScreen() {
 
         <View style={styles.footer}>
           <Text style={{ color: theme.secondary }}>Already have an account? </Text>
-          <Link href="/(auth)/login" asChild>
+          <Link href={"/(auth)/login" as any} asChild>
             <Text style={{ color: theme.accent, fontWeight: '700' }}>Login</Text>
           </Link>
         </View>

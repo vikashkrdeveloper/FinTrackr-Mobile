@@ -30,7 +30,7 @@ export default function LoginScreen() {
     if (error) {
       Alert.alert('Login Error', error.message);
     } else {
-      router.replace('/(tabs)');
+      router.replace('/(tabs)' as any);
     }
     setLoading(false);
   };
@@ -76,7 +76,7 @@ export default function LoginScreen() {
 
         <View style={styles.footer}>
           <Text style={{ color: theme.secondary }}>Don&apos;t have an account? </Text>
-          <Link href="/(auth)/register" asChild>
+          <Link href={"/(auth)/register" as any} asChild>
             <Text style={{ color: theme.accent, fontWeight: '700' }}>Register</Text>
           </Link>
         </View>
