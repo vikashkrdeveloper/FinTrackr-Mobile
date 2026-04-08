@@ -12,16 +12,16 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   newArchEnabled: true,
   ios: {
     supportsTablet: true,
-    bundleIdentifier: 'com.fintrackr.app'
+    bundleIdentifier: 'com.vikash.fintrackr'
   },
   android: {
     adaptiveIcon: {
-      backgroundColor: '#E6F4FE',
+      backgroundColor: '#000000',
       foregroundImage: './assets/images/android-icon-foreground.png',
       backgroundImage: './assets/images/android-icon-background.png',
       monochromeImage: './assets/images/android-icon-monochrome.png',
     },
-    package: 'com.fintrackr.app',
+    package: 'com.vikash.fintrackr',
     edgeToEdgeEnabled: true,
     predictiveBackGestureEnabled: false,
   },
