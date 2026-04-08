@@ -1,50 +1,88 @@
-# Welcome to your Expo app 👋
+# FinTrackr – Smart Expense Manager
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+FinTrackr is a production-grade, offline-first mobile application built with **React Native** and **Expo**. It provides users with a premium experience for tracking daily expenses, visualizing financial health through animated charts, and managing categories with full cloud sync via Supabase.
 
-## Get started
+---
 
-1. Install dependencies
+## 🌟 Key Features
 
-   ```bash
-   npm install
-   ```
+- **Dynamic Dashboard**: Real-time tracking of Total Income, Expenses, and Remaining Balance.
+- **Animated Visualizations**: Interactive Donat Pie Charts for category-based spending breakdown.
+- **Advanced History**: Search, filter by type (Income/Expense), and filter by custom categories.
+- **Custom Categories**: Create bespoke categories with dynamic icons and theme-consistent colors.
+- **Cloud Authentication**: Secure login and profile management powered by **Supabase**.
+- **Data Export**: Export your entire financial history to **CSV** via the native share sheet.
+- **Premium UI**: Token-based design system with full Dark Mode support and micro-interactions.
 
-2. Start the app
+---
 
-   ```bash
-   npx expo start
-   ```
+## 🛠️ Tech Stack
 
-In the output, you'll find options to open the app in a
+- **Core**: React Native, Expo (SDK 54)
+- **Navigation**: Expo Router (File-based)
+- **State Management**: Zustand (+ Persistence)
+- **Backend/Auth**: Supabase
+- **Visuals**: React Native Gifted Charts, Expo Linear Gradient
+- **Animations**: React Native Reanimated
+- **Icons**: Expo Vector Icons (Material Community)
+- **Persistence**: AsyncStorage
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+---
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## 🚀 Getting Started
 
-## Get a fresh project
+### 1. Prerequisites
+- Node.js (LTS)
+- Expo Go app on your mobile device (for development)
+- A Supabase account
 
-When you're ready, run:
-
+### 2. Installation
 ```bash
-npm run reset-project
+# Clone the repository
+git clone <your-repo-url>
+
+# Install dependencies
+npm install
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### 3. Environment Setup
+Create a `.env` file in the root directory and add your Supabase credentials:
+```env
+EXPO_PUBLIC_SUPABASE_URL=your-supabase-url
+EXPO_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+```
 
-## Learn more
+### 4. Running the App
+```bash
+npx expo start
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+---
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## 📦 Building for Production
 
-## Join the community
+To generate an APK for Android:
+1. Install EAS CLI: `npm install -g eas-cli`
+2. Log in to Expo: `eas login`
+3. Configure the build: `eas build:configure`
+4. Run the build:
+   ```bash
+   eas build -p android --profile preview
+   ```
+   *This will generate a shareable APK link.*
 
-Join our community of developers creating universal apps.
+---
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## 📂 Project Structure
+
+- `app/`: Expo Router screens and layouts.
+- `components/`: Reusable UI modules (Cards, Buttons, Charts).
+- `store/`: Zustand stores for global state (Auth, Expenses).
+- `lib/`: Utility functions (Supabase client, Export logic).
+- `theme/`: Centralized design system (Colors, Spacing, Typography).
+- `assets/`: App icons, splash screens, and screenshots.
+
+---
+
+## 📄 License
+This project is licensed under the MIT License.
