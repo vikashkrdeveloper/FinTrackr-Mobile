@@ -12,7 +12,7 @@ export const NotificationBell = () => {
   return (
     <TouchableOpacity 
       style={[styles.container, { backgroundColor: theme.surface }]}
-      onPress={() => router.push('/notifications')}
+      onPress={() => router.push('/notifications' as any)}
     >
       <MaterialCommunityIcons name="bell-outline" size={24} color={theme.primary} />
       <View style={[styles.badge, { backgroundColor: theme.accent }]} />

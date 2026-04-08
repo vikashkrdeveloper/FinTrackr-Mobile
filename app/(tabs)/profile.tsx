@@ -57,7 +57,7 @@ export default function ProfileScreen() {
           <Text style={[styles.userName, { color: theme.primary }]}>{fullName}</Text>
           <Text style={[styles.userEmail, { color: theme.secondary }]}>{email}</Text>
         </View>
-        <Link href="/edit-profile" asChild>
+        <Link href={"/edit-profile" as any} asChild>
           <TouchableOpacity style={[styles.editBtn, { backgroundColor: theme.surfaceLighter }]}>
             <MaterialCommunityIcons name="pencil" size={20} color={theme.primary} />
           </TouchableOpacity>
