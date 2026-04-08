@@ -5,6 +5,7 @@ import { useExpenseStore } from '../../store/expenseStore';
 import { TOKENS } from '../../theme/tokens';
 import { TransactionItem } from '../../components/transactions/TransactionItem';
 import { CategoryChip } from '../../components/ui/CategoryChip';
+import { exportTransactionsToCSV } from '../../lib/export';
 
 export default function HistoryScreen() {
   const isDark = (useColorScheme() ?? 'dark') === 'dark';
@@ -29,6 +30,17 @@ export default function HistoryScreen() {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>
+      <View style={styles.topHeader}>
+        <Text style={[styles.title, { color: theme.primary }]}>History</Text>
+        <TouchableOpacity 
+          style={[styles.exportBtn, { backgroundColor: theme.surface }]}
+          onPress={() => exportTransactionsToCSV(filteredTransactions, categories)}
+        >
+          <MaterialCommunityIcons name="export-variant" size={20} color={theme.primary} />
+          <Text style={[styles.exportText, { color: theme.primary }]}>Export</Text>
+        </TouchableOpacity>
+      </View>
+
       <View style={styles.header}>
         <View style={[styles.searchContainer, { backgroundColor: theme.surface }]}>
           <MaterialCommunityIcons name="magnify" size={20} color={theme.secondary} style={styles.searchIcon} />
@@ -120,6 +132,29 @@ export default function HistoryScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  topHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: TOKENS.spacing.xl,
+    paddingTop: TOKENS.spacing.xl,
+    marginBottom: TOKENS.spacing.lg,
+  },
+  title: {
+    ...TOKENS.typography.heading,
+  },
+  exportBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: TOKENS.spacing.md,
+    paddingVertical: 8,
+    borderRadius: 12,
+    gap: 6,
+  },
+  exportText: {
+    ...TOKENS.typography.caption,
+    fontWeight: '700',
   },
   header: {
     paddingTop: TOKENS.spacing.md,
