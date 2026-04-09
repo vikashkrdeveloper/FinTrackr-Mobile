@@ -20,9 +20,19 @@ export default function HomeScreen() {
   const { user } = useAuthStore();
   const firstName = user?.user_metadata?.full_name?.split(' ')[0] || 'User';
 
-  const transactions = useExpenseStore((state) => state.getCurrentMonthTransactions());
+  const rawTransactions = useExpenseStore((state) => state.transactions);
   const categories = useExpenseStore((state) => state.categories);
   const deleteTransaction = useExpenseStore((state) => state.deleteTransaction);
+
+  const transactions = useMemo(() => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth();
+    return rawTransactions.filter(t => {
+      const tDate = new Date(t.date);
+      return tDate.getFullYear() === year && tDate.getMonth() === month;
+    });
+  }, [rawTransactions]);
 
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
 
