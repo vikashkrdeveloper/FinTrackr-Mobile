@@ -1,12 +1,12 @@
 import React from 'react';
-import { View, Text, StyleSheet, useColorScheme } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { TOKENS } from '../../theme/tokens';
 import { useExpenseStore } from '../../store/expenseStore';
+import { useAppTheme } from '../../hooks/useAppTheme';
 
 export const SummaryCards = () => {
-  const isDark = (useColorScheme() ?? 'dark') === 'dark';
-  const theme = isDark ? TOKENS.colors.dark : TOKENS.colors.light;
+  const { theme } = useAppTheme();
 
   const income = useExpenseStore(state => state.getCurrentMonthIncome());
   const expense = useExpenseStore(state => state.getCurrentMonthExpense());
@@ -46,8 +46,8 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: TOKENS.spacing.lg, // Reduced bottom margin
-    paddingHorizontal: TOKENS.spacing.xl,
+    marginBottom: TOKENS.spacing.lg,
+    // paddingHorizontal: TOKENS.spacing.xl,
     gap: TOKENS.spacing.md,
   },
   card: {

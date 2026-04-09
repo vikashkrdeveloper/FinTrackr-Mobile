@@ -1,13 +1,13 @@
 import React from 'react';
-import { TouchableOpacity, View, StyleSheet, useColorScheme } from 'react-native';
+import { TouchableOpacity, View, StyleSheet } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { TOKENS } from '../../theme/tokens';
+import { useAppTheme } from '../../hooks/useAppTheme';
 
 export const NotificationBell = () => {
   const router = useRouter();
-  const isDark = (useColorScheme() ?? 'dark') === 'dark';
-  const theme = isDark ? TOKENS.colors.dark : TOKENS.colors.light;
+  const { theme } = useAppTheme();
 
   return (
     <TouchableOpacity 

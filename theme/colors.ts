@@ -1,36 +1,35 @@
+/**
+ * Standardized Color System for FinTrackr
+ * defines the core palette used across the tokens and components.
+ */
+
 export const colors = {
+  // Brand & Semantic Colors
+  brand: {
+    teal: '#50BFA5',
+    tealDark: '#3DA58D',
+    tealLight: '#6FD2BA',
+  },
+  
+  // Light Palette
   light: {
     background: '#F8F9FA',
-    card: '#FFFFFF',
-    text: '#111827',
+    surface: '#FFFFFF',
+    surfaceLighter: '#F3F4F6',
+    textPrimary: '#111827',
     textSecondary: '#6B7280',
-    primary: '#4F46E5', // Indigo
-    primaryLight: '#818CF8', // Indigo lighter
-    success: '#10B981', // Emerald
-    danger: '#EF4444', // Red
-    border: '#E5E7EB',
-    gradientStart: '#4F46E5',
-    gradientEnd: '#818CF8',
-    tabIconDefault: '#9CA3AF',
-    tabIconSelected: '#4F46E5',
-    tabBackground: '#FFFFFF',
+    error: '#EF4444',
   },
+
+  // Dark Palette (True Dark Aesthetic)
   dark: {
-    background: '#111827',
-    card: '#1F2937',
-    text: '#F9FAFB',
-    textSecondary: '#9CA3AF',
-    primary: '#6366F1', // Indigo
-    primaryLight: '#818CF8',
-    success: '#34D399', // Emerald
-    danger: '#F87171', // Red
-    border: '#374151',
-    gradientStart: '#4F46E5',
-    gradientEnd: '#6366F1',
-    tabIconDefault: '#6B7280',
-    tabIconSelected: '#818CF8',
-    tabBackground: '#1F2937',
-  },
+    background: '#000000',
+    surface: '#1A1A1A',
+    surfaceLighter: '#2A2A2A',
+    textPrimary: '#FFFFFF',
+    textSecondary: '#A0A0A0',
+    error: '#FF4B4B',
+  }
 };
 
 export type Theme = 'light' | 'dark';

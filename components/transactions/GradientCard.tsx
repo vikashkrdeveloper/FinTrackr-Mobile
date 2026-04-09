@@ -1,19 +1,22 @@
 import React from 'react';
-import { View, Text, StyleSheet, useColorScheme } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { TOKENS } from '../../theme/tokens';
 import { useExpenseStore } from '../../store/expenseStore';
+import { useAppTheme } from '../../hooks/useAppTheme';
 
 export const GradientCard = () => {
-  const isDark = (useColorScheme() ?? 'dark') === 'dark';
-  const theme = isDark ? TOKENS.colors.dark : TOKENS.colors.light;
+  const { isDark, theme } = useAppTheme();
   
   const balance = useExpenseStore((state) => state.getBalance());
   
   const formatCurrency = (amount: number) => {
     return `$${Math.abs(amount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
   };
+
+  // On the card, we want high contrast. If it's a dark gradient, use white.
+  const textColor = '#FFFFFF'; 
 
   return (
     <LinearGradient
@@ -23,19 +26,19 @@ export const GradientCard = () => {
       style={styles.card}
     >
       <View style={styles.header}>
-        <Text style={styles.bankName}>FinTrackr</Text>
-        <MaterialCommunityIcons name="integrated-circuit-chip" size={28} color="rgba(0,0,0,0.6)" />
+        <Text style={[styles.bankName, { color: textColor }]}>FinTrackr</Text>
+        <MaterialCommunityIcons name="integrated-circuit-chip" size={28} color={isDark ? "rgba(255,255,255,0.7)" : "rgba(0,0,0,0.6)"} />
       </View>
       
       <View style={styles.balanceContainer}>
-        <Text style={styles.label}>Total Balance</Text>
-        <Text style={styles.amount}>
+        <Text style={[styles.label, { color: textColor }]}>Total Balance</Text>
+        <Text style={[styles.amount, { color: textColor }]}>
           {balance < 0 ? '-' : ''}{formatCurrency(balance)}
         </Text>
       </View>
       
       <View style={styles.footer}>
-        <Text style={styles.cardNumber}>**** **** **** 8821</Text>
+        <Text style={[styles.cardNumber, { color: textColor }]}>**** **** **** 8821</Text>
       </View>
     </LinearGradient>
   );
@@ -48,6 +51,11 @@ const styles = StyleSheet.create({
     padding: TOKENS.spacing.xl,
     justifyContent: 'space-between',
     marginBottom: TOKENS.spacing.xl,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
   },
   header: {
     flexDirection: 'row',
@@ -56,22 +64,19 @@ const styles = StyleSheet.create({
   },
   bankName: {
     ...TOKENS.typography.subheading,
-    color: '#000000',
-    opacity: 0.8,
+    opacity: 0.9,
   },
   balanceContainer: {
     alignItems: 'flex-start',
   },
   label: {
     ...TOKENS.typography.caption,
-    color: '#000000',
-    opacity: 0.6,
+    opacity: 0.8,
     marginBottom: TOKENS.spacing.xs,
   },
   amount: {
     fontSize: 32,
     fontWeight: '700',
-    color: '#000000',
     letterSpacing: -1,
   },
   footer: {
@@ -81,8 +86,7 @@ const styles = StyleSheet.create({
   cardNumber: {
     ...TOKENS.typography.body,
     fontWeight: '600',
-    color: '#000000',
-    opacity: 0.8,
+    opacity: 0.9,
     letterSpacing: 2,
   }
 });

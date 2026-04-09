@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, StyleSheet, ViewProps, useColorScheme } from 'react-native';
-import { colors } from '../../theme/colors';
+import { View, StyleSheet, ViewProps } from 'react-native';
+import { useAppTheme } from '../../hooks/useAppTheme';
 
 interface CardProps extends ViewProps {
   children: React.ReactNode;
@@ -8,14 +8,13 @@ interface CardProps extends ViewProps {
 }
 
 export const Card: React.FC<CardProps> = ({ children, style, noPadding = false, ...rest }) => {
-  const colorScheme = useColorScheme() ?? 'light';
-  const theme = colors[colorScheme];
+  const { theme } = useAppTheme();
 
   return (
     <View
       style={[
         styles.card,
-        { backgroundColor: theme.card, shadowColor: theme.text },
+        { backgroundColor: theme.surface, shadowColor: theme.primary },
         !noPadding && styles.padding,
         style,
       ]}

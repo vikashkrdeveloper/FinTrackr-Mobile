@@ -44,6 +44,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       },
     ],
     '@react-native-community/datetimepicker',
+    'expo-sqlite'
   ],
   experiments: {
     typedRoutes: true,

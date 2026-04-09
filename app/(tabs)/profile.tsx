@@ -1,14 +1,18 @@
 import React, { useMemo } from 'react';
-import { View, Text, StyleSheet, ScrollView, useColorScheme, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Link } from 'expo-router';
-import { useExpenseStore } from '../../store/expenseStore';
+import { StatusBar } from 'expo-status-bar';
+import { useExpenseStore, ThemeType } from '../../store/expenseStore';
 import { useAuthStore } from '../../store/authStore';
 import { TOKENS } from '../../theme/tokens';
+import { useAppTheme } from '../../hooks/useAppTheme';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { ConfirmationModal } from '../../components/ui/ConfirmationModal';
 
 export default function ProfileScreen() {
-  const isDark = (useColorScheme() ?? 'dark') === 'dark';
-  const theme = isDark ? TOKENS.colors.dark : TOKENS.colors.light;
+  const { theme, isDark, userPreference } = useAppTheme();
+  const setTheme = useExpenseStore((state) => state.setTheme);
   
   const transactions = useExpenseStore((state) => state.transactions);
   const categories = useExpenseStore((state) => state.categories);
@@ -46,82 +50,141 @@ export default function ProfileScreen() {
 
   const formatCurrency = (amount: number) => `$${amount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
+  const [showLogoutModal, setShowLogoutModal] = React.useState(false);
+
   return (
-    <ScrollView style={[styles.container, { backgroundColor: theme.background }]} contentContainerStyle={{ paddingBottom: 100 }}>
-      {/* User Info Header */}
-      <View style={[styles.headerCard, { backgroundColor: theme.surface }]}>
-        <View style={[styles.avatarContainer, { backgroundColor: theme.accent }]}>
-          <Text style={styles.avatarText}>{fullName.charAt(0)}</Text>
-        </View>
-        <View style={styles.headerDetails}>
-          <Text style={[styles.userName, { color: theme.primary }]}>{fullName}</Text>
-          <Text style={[styles.userEmail, { color: theme.secondary }]}>{email}</Text>
-        </View>
-        <Link href={"/edit-profile" as any} asChild>
-          <TouchableOpacity style={[styles.editBtn, { backgroundColor: theme.surfaceLighter }]}>
-            <MaterialCommunityIcons name="pencil" size={20} color={theme.primary} />
-          </TouchableOpacity>
-        </Link>
-      </View>
-
-      <View style={styles.content}>
-        <Text style={[styles.sectionTitle, { color: theme.primary }]}>Spending Analytics</Text>
-
-        {categoryStats.length === 0 ? (
-          <View style={styles.emptyState}>
-            <Text style={[styles.emptyStateText, { color: theme.secondary }]}>
-              No expenses recorded yet.
-            </Text>
+    <SafeAreaView 
+      style={[styles.container, { backgroundColor: theme.background }]}
+      edges={['top', 'left', 'right']}
+    >
+      <StatusBar style={isDark ? 'light' : 'dark'} />
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 100 }}>
+        {/* User Info Header */}
+        <View style={[styles.headerCard, { backgroundColor: theme.surface }]}>
+          <View style={[styles.avatarContainer, { backgroundColor: theme.accent }]}>
+            <Text style={styles.avatarText}>{fullName.charAt(0)}</Text>
           </View>
-        ) : (
-          <View style={[styles.card, { backgroundColor: theme.surface }]}>
-            {categoryStats.map((item: any, index: number) => (
-              <View 
-                key={item.name} 
-                style={[
-                  styles.statRow, 
-                  index < categoryStats.length - 1 && { borderBottomWidth: 1, borderBottomColor: theme.surfaceLighter }
-                ]}
-              >
-                <View style={styles.statDetails}>
-                  <Text style={[styles.catName, { color: theme.primary }]}>{item.name}</Text>
-                  <Text style={[styles.catAmount, { color: theme.primary }]}>
-                    {formatCurrency(item.amount)}
-                  </Text>
-                </View>
-                <View style={styles.progressContainer}>
-                  <View style={[styles.progressBackground, { backgroundColor: theme.surfaceLighter }]}>
-                    <View 
-                      style={[
-                        styles.progressFill, 
-                        { width: `${item.percentage}%`, backgroundColor: item.color }
-                      ]} 
-                    />
-                  </View>
-                  <Text style={[styles.percentage, { color: theme.secondary }]}>
-                    {item.percentage.toFixed(1)}%
-                  </Text>
-                </View>
-              </View>
-            ))}
+          <View style={styles.headerDetails}>
+            <Text style={[styles.userName, { color: theme.primary }]}>{fullName}</Text>
+            <Text style={[styles.userEmail, { color: theme.secondary }]}>{email}</Text>
           </View>
-        )}
+          <Link href={"/edit-profile" as any} asChild>
+            <TouchableOpacity style={[styles.editBtn, { backgroundColor: theme.surfaceLighter }]}>
+              <MaterialCommunityIcons name="pencil" size={20} color={theme.primary} />
+            </TouchableOpacity>
+          </Link>
+        </View>
 
-        {/* Global Actions */}
-        <View style={{ marginTop: 32 }}>
-          <TouchableOpacity 
-            style={[styles.actionRow, { borderBottomWidth: 1, borderBottomColor: theme.surfaceLighter }]}
-            onPress={signOut}
-          >
-            <View style={[styles.actionIcon, { backgroundColor: `${theme.error}20` }]}>
-              <MaterialCommunityIcons name="logout" size={22} color={theme.error} />
+        <View style={styles.content}>
+          <Text style={[styles.sectionTitle, { color: theme.primary }]}>Spending Analytics</Text>
+
+          {categoryStats.length === 0 ? (
+            <View style={styles.emptyState}>
+              <Text style={[styles.emptyStateText, { color: theme.secondary }]}>
+                No expenses recorded yet.
+              </Text>
             </View>
-            <Text style={[styles.actionLabel, { color: theme.error }]}>Log Out</Text>
-            <MaterialCommunityIcons name="chevron-right" size={24} color={theme.secondary} />
-          </TouchableOpacity>
+          ) : (
+            <View style={[styles.card, { backgroundColor: theme.surface }]}>
+              {categoryStats.map((item: any, index: number) => (
+                <View 
+                  key={item.name} 
+                  style={[
+                    styles.statRow, 
+                    index < categoryStats.length - 1 && { borderBottomWidth: 1, borderBottomColor: theme.surfaceLighter }
+                  ]}
+                >
+                  <View style={styles.statDetails}>
+                    <Text style={[styles.catName, { color: theme.primary }]}>{item.name}</Text>
+                    <Text style={[styles.catAmount, { color: theme.primary }]}>
+                      {formatCurrency(item.amount)}
+                    </Text>
+                  </View>
+                  <View style={styles.progressContainer}>
+                    <View style={[styles.progressBackground, { backgroundColor: theme.surfaceLighter }]}>
+                      <View 
+                        style={[
+                          styles.progressFill, 
+                          { width: `${item.percentage}%`, backgroundColor: item.color }
+                        ]} 
+                      />
+                    </View>
+                    <Text style={[styles.percentage, { color: theme.secondary }]}>
+                      {item.percentage.toFixed(1)}%
+                    </Text>
+                  </View>
+                </View>
+              ))}
+            </View>
+          )}
+
+          <View style={{ marginTop: 32 }}>
+            <Text style={[styles.sectionTitle, { color: theme.primary }]}>Preferences</Text>
+            <View style={[styles.card, { backgroundColor: theme.surface }]}>
+              <View style={styles.themeContainer}>
+                {[
+                  { id: 'light', icon: 'white-balance-sunny', label: 'Light' },
+                  { id: 'dark', icon: 'moon-waning-crescent', label: 'Dark' },
+                  { id: 'system', icon: 'cellphone-cog', label: 'System' },
+                ].map((opt) => {
+                  const isActive = userPreference === opt.id;
+                  return (
+                    <TouchableOpacity
+                      key={opt.id}
+                      style={[
+                        styles.themeOption,
+                        isActive && { backgroundColor: theme.surfaceLighter },
+                      ]}
+                      onPress={() => setTheme(opt.id as ThemeType)}
+                    >
+                      <MaterialCommunityIcons 
+                        name={opt.icon as any} 
+                        size={24} 
+                        color={isActive ? theme.accent : theme.secondary} 
+                      />
+                      <Text 
+                        style={[
+                          styles.themeLabel, 
+                          { color: isActive ? theme.primary : theme.secondary }
+                        ]}
+                      >
+                        {opt.label}
+                      </Text>
+                    </TouchableOpacity>
+                  );
+                })}
+              </View>
+            </View>
+          </View>
+
+          {/* Global Actions */}
+          <View style={{ marginTop: 32 }}>
+            <TouchableOpacity 
+              style={[styles.actionRow, { borderBottomWidth: 1, borderBottomColor: theme.surfaceLighter }]}
+              onPress={() => setShowLogoutModal(true)}
+            >
+              <View style={[styles.actionIcon, { backgroundColor: `${theme.error}20` }]}>
+                <MaterialCommunityIcons name="logout" size={22} color={theme.error} />
+              </View>
+              <Text style={[styles.actionLabel, { color: theme.error }]}>Log Out</Text>
+              <MaterialCommunityIcons name="chevron-right" size={24} color={theme.secondary} />
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+
+      <ConfirmationModal
+        visible={showLogoutModal}
+        onClose={() => setShowLogoutModal(false)}
+        onConfirm={signOut}
+        title="Logout Confirmation"
+        message="Are you sure you want to log out? You will need to sign in again to access your data."
+        confirmLabel="Logout"
+        cancelLabel="Stay here"
+        type="danger"
+        icon="logout"
+      />
+    </SafeAreaView>
   );
 }
 
@@ -236,6 +299,22 @@ const styles = StyleSheet.create({
   actionLabel: {
     flex: 1,
     ...TOKENS.typography.body,
+    fontWeight: '600',
+  },
+  themeContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  themeOption: {
+    flex: 1,
+    alignItems: 'center',
+    padding: TOKENS.spacing.md,
+    borderRadius: TOKENS.radius.md,
+    marginHorizontal: 4,
+  },
+  themeLabel: {
+    ...TOKENS.typography.caption,
+    marginTop: 4,
     fontWeight: '600',
   },
 });

@@ -1,47 +1,36 @@
 import 'react-native-url-polyfill/auto';
-import { Platform } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import 'expo-sqlite/localStorage/install';
 import { createClient } from '@supabase/supabase-js';
-
-// Custom storage adapter to handle Web vs Native environments safely
-const CustomStorage = {
-  getItem: async (key: string) => {
-    if (Platform.OS === 'web') {
-      if (typeof window !== 'undefined' && window.localStorage) {
-        return window.localStorage.getItem(key);
-      }
-      return null;
-    }
-    return AsyncStorage.getItem(key);
-  },
-  setItem: async (key: string, value: string) => {
-    if (Platform.OS === 'web') {
-      if (typeof window !== 'undefined' && window.localStorage) {
-        window.localStorage.setItem(key, value);
-      }
-      return;
-    }
-    return AsyncStorage.setItem(key, value);
-  },
-  removeItem: async (key: string) => {
-    if (Platform.OS === 'web') {
-      if (typeof window !== 'undefined' && window.localStorage) {
-        window.localStorage.removeItem(key);
-      }
-      return;
-    }
-    return AsyncStorage.removeItem(key);
-  },
-};
+import { Logger } from './logger';
 
 const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL || '';
 const supabaseAnonKey = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY || '';
 
+// It is significantly more stable than 'AsyncStorage' for background auth tasks.
+const store = typeof localStorage !== 'undefined' ? localStorage : undefined;
+
+if (!store) {
+  Logger.warn('Storage was not initialized correctly. Auth persistence may be disabled.');
+}
+
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   auth: {
-    storage: CustomStorage,
+    storage: store,
     autoRefreshToken: true,
     persistSession: true,
     detectSessionInUrl: false,
   },
+});
+
+// Log any auth state changes for debugging
+supabase.auth.onAuthStateChange((event, session) => {
+  if (event === 'SIGNED_IN') {
+    Logger.success('User signed in', { userId: session?.user.id });
+  } else if (event === 'SIGNED_OUT') {
+    Logger.info('User signed out');
+  } else if (event === 'TOKEN_REFRESHED') {
+    Logger.info('Auth token refreshed');
+  } else if (event === 'USER_UPDATED') {
+    Logger.debug('User profile updated');
+  }
 });

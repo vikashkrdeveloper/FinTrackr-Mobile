@@ -1,31 +1,36 @@
 import React from 'react';
-import { Text, StyleSheet, Pressable, useColorScheme } from 'react-native';
+import { Text, StyleSheet, Pressable, ActivityIndicator } from 'react-native';
 import { TOKENS } from '../../theme/tokens';
+import { useAppTheme } from '../../hooks/useAppTheme';
 
 interface ButtonProps {
   label: string;
   onPress: () => void;
   disabled?: boolean;
+  loading?: boolean;
 }
 
-export const PrimaryButton = ({ label, onPress, disabled }: ButtonProps) => {
-  const isDark = (useColorScheme() ?? 'dark') === 'dark';
-  const theme = isDark ? TOKENS.colors.dark : TOKENS.colors.light;
+export const PrimaryButton = ({ label, onPress, disabled, loading }: ButtonProps) => {
+  const { theme } = useAppTheme();
 
   return (
     <Pressable
       onPress={onPress}
-      disabled={disabled}
+      disabled={disabled || loading}
       style={({ pressed }) => [
         styles.button,
         { backgroundColor: theme.primary },
-        disabled && { opacity: 0.5 },
-        pressed && { opacity: 0.8 }
+        (disabled || loading) && { opacity: 0.5 },
+        pressed && !loading && { opacity: 0.8 }
       ]}
     >
-      <Text style={[styles.label, { color: theme.background }]}>
-        {label}
-      </Text>
+      {loading ? (
+        <ActivityIndicator color={theme.background} />
+      ) : (
+        <Text style={[styles.label, { color: theme.background }]}>
+          {label}
+        </Text>
+      )}
     </Pressable>
   );
 };
@@ -37,9 +42,10 @@ const styles = StyleSheet.create({
     borderRadius: TOKENS.radius.md,
     alignItems: 'center',
     justifyContent: 'center',
+    minHeight: 56, // Ensure consistent height
   },
   label: {
-    fontSize: 16,
+    ...TOKENS.typography.body,
     fontWeight: '700',
   }
 });

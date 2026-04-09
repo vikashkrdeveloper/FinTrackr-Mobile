@@ -1,24 +1,26 @@
+import { colors } from './colors';
+
 export const TOKENS = {
   colors: {
     dark: {
-      background: '#000000',
-      surface: '#1A1A1A',
-      surfaceLighter: '#2A2A2A',
-      primary: '#FFFFFF',
-      secondary: '#A0A0A0',
-      accent: '#50BFA5',
-      error: '#FF4B4B',
-      cardGradient: ['#D9E4DD', '#50BFA5'],
+      background: colors.dark.background,
+      surface: colors.dark.surface,
+      surfaceLighter: colors.dark.surfaceLighter,
+      primary: colors.dark.textPrimary,
+      secondary: colors.dark.textSecondary,
+      accent: colors.brand.teal,
+      error: colors.dark.error,
+      cardGradient: [colors.brand.tealDark, colors.brand.teal] as [string, string],
     },
     light: {
-      background: '#F8F9FA',
-      surface: '#FFFFFF',
-      surfaceLighter: '#F3F4F6',
-      primary: '#111827',
-      secondary: '#6B7280',
-      accent: '#50BFA5',
-      error: '#EF4444',
-      cardGradient: ['#E6EFEA', '#6FD2BA'],
+      background: colors.light.background,
+      surface: colors.light.surface,
+      surfaceLighter: colors.light.surfaceLighter,
+      primary: colors.light.textPrimary,
+      secondary: colors.light.textSecondary,
+      accent: colors.brand.teal,
+      error: colors.light.error,
+      cardGradient: [colors.brand.teal, colors.brand.tealLight] as [string, string],
     }
   },
   typography: {

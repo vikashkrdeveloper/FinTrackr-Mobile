@@ -1,8 +1,11 @@
 import React from 'react';
-import { View, Text, StyleSheet, FlatList, useColorScheme, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { TOKENS } from '../theme/tokens';
+import { useAppTheme } from '../hooks/useAppTheme';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const MOCK_NOTIFICATIONS = [
   {
@@ -33,18 +36,22 @@ const MOCK_NOTIFICATIONS = [
 
 export default function NotificationsScreen() {
   const router = useRouter();
-  const isDark = (useColorScheme() ?? 'dark') === 'dark';
-  const theme = isDark ? TOKENS.colors.dark : TOKENS.colors.light;
+  const { theme, isDark } = useAppTheme();
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.background }]}>
+    <SafeAreaView 
+      style={[styles.container, { backgroundColor: theme.background }]}
+      edges={['top', 'left', 'right']}
+    >
+      <StatusBar style={isDark ? 'light' : 'dark'} />
       <Stack.Screen options={{ 
         headerShown: true, 
         title: 'Notifications',
         headerStyle: { backgroundColor: theme.background },
+        headerShadowVisible: false,
         headerTintColor: theme.primary,
         headerLeft: () => (
-          <TouchableOpacity onPress={() => router.back()} style={{ marginLeft: 16 }}>
+          <TouchableOpacity onPress={() => router.back()} style={{ marginLeft: 8 }}>
             <MaterialCommunityIcons name="arrow-left" size={24} color={theme.primary} />
           </TouchableOpacity>
         )
@@ -54,6 +61,7 @@ export default function NotificationsScreen() {
         data={MOCK_NOTIFICATIONS}
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.list}
+        showsVerticalScrollIndicator={false}
         renderItem={({ item }) => (
           <View style={[styles.notiCard, { backgroundColor: theme.surface }]}>
             <View style={[styles.iconBox, { backgroundColor: `${item.color}20` }]}>
@@ -69,7 +77,7 @@ export default function NotificationsScreen() {
           </View>
         )}
       />
-    </View>
+    </SafeAreaView>
   );
 }
 

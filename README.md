@@ -1,31 +1,40 @@
 # FinTrackr – Smart Expense Manager
 
-FinTrackr is a production-grade, offline-first mobile application built with **React Native** and **Expo**. It provides users with a premium experience for tracking daily expenses, visualizing financial health through animated charts, and managing categories with full cloud sync via Supabase.
+FinTrackr is a production-grade, offline-first mobile application built with **React Native** and **Expo**. It provides a premium experience for tracking daily expenses, visualizing financial health through animated charts, and managing categories with full cloud sync via Supabase.
+
+---
+
+## 📱 App Preview
+
+| Dashboard | Transactions | Analytics | Profile |
+| :---: | :---: | :---: | :---: |
+| ![Dashboard](https://placehold.co/300x600/1A1A1A/FFFFFF?text=Dashboard) | ![History](https://placehold.co/300x600/1A1A1A/FFFFFF?text=History) | ![Analytics](https://placehold.co/300x600/1A1A1A/FFFFFF?text=Analytics) | ![Profile](https://placehold.co/300x600/1A1A1A/FFFFFF?text=Profile) |
 
 ---
 
 ## 🌟 Key Features
 
-- **Dynamic Dashboard**: Real-time tracking of Total Income, Expenses, and Remaining Balance.
-- **Animated Visualizations**: Interactive Donat Pie Charts for category-based spending breakdown.
-- **Advanced History**: Search, filter by type (Income/Expense), and filter by custom categories.
-- **Custom Categories**: Create bespoke categories with dynamic icons and theme-consistent colors.
-- **Cloud Authentication**: Secure login and profile management powered by **Supabase**.
-- **Data Export**: Export your entire financial history to **CSV** via the native share sheet.
-- **Premium UI**: Token-based design system with full Dark Mode support and micro-interactions.
+- **🚀 Performance-First**: Multi-threaded animations and optimized data layer.
+- **🛡️ Industry-Grade Logging**: Centralized pipeline capturing global console logs and JS crashes via `ErrorUtils`.
+- **💾 Stable Storage**: Hybrid storage architecture using **SQLite** as the primary Supabase adapter for maximum reliability.
+- **🎨 Manual Theme Switcher**: Toggle between **Light**, **Dark**, and **System Sync** directly from the Profile settings.
+- **📊 Animated Visualizations**: Interactive Donut Pie Charts for category-based spending breakdown.
+- **☁️ Cloud Authentication**: Secure login and profile management powered by **Supabase**.
+- **📤 Data Export**: Export entire financial history to **CSV** via the native share sheet.
+- **💎 Premium UI**: Token-based design system with specific HSL-tailored colors and smooth micro-interactions.
 
 ---
 
 ## 🛠️ Tech Stack
 
 - **Core**: React Native, Expo (SDK 54)
-- **Navigation**: Expo Router (File-based)
-- **State Management**: Zustand (+ Persistence)
+- **Navigation**: Expo Router (Typed File-based)
+- **State Management**: Zustand (+ Persistent Storage)
 - **Backend/Auth**: Supabase
-- **Visuals**: React Native Gifted Charts, Expo Linear Gradient
-- **Animations**: React Native Reanimated
+- **Storage Layer**: SQLite (Supabase Adapter) + AsyncStorage (Zustand)
+- **Logging**: Centralized Class-based Logger + ErrorUtils
+- **Visuals**: Gifted Charts, Expo Linear Gradient, Reanimated
 - **Icons**: Expo Vector Icons (Material Community)
-- **Persistence**: AsyncStorage
 
 ---
 
@@ -54,7 +63,7 @@ EXPO_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
 
 ### 4. Running the App
 ```bash
-npx expo start
+npx expo start -c
 ```
 
 ---
@@ -63,13 +72,11 @@ npx expo start
 
 To generate an APK for Android:
 1. Install EAS CLI: `npm install -g eas-cli`
-2. Log in to Expo: `eas login`
-3. Configure the build: `eas build:configure`
-4. Run the build:
+2. Configure the build: `eas build:configure`
+3. Run the build:
    ```bash
    eas build -p android --profile preview
    ```
-   *This will generate a shareable APK link.*
 
 ---
 
@@ -79,10 +86,10 @@ To generate an APK for Android:
 - `components/`: Reusable UI modules (Cards, Buttons, Charts).
 - `store/`: Zustand stores for global state (Auth, Expenses).
 - `lib/`: Utility functions (Supabase client, Export logic).
-- `theme/`: Centralized design system (Colors, Spacing, Typography).
-- `assets/`: App icons, splash screens, and screenshots.
+- `hooks/`: Custom hooks (Theme resolution).
+- `theme/`: Centralized design system (standardized colors, spacing, typography).
 
 ---
 
 ## 📄 License
-This project is licensed under the MIT License.
+MIT License.

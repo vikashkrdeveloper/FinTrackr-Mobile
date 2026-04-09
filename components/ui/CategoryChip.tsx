@@ -1,8 +1,9 @@
 import React from 'react';
-import { TouchableOpacity, Text, StyleSheet, useColorScheme } from 'react-native';
+import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { TOKENS } from '../../theme/tokens';
 import { Category } from '../../store/expenseStore';
+import { useAppTheme } from '../../hooks/useAppTheme';
 
 interface CategoryChipProps {
   category: Category;
@@ -11,12 +12,13 @@ interface CategoryChipProps {
 }
 
 export const CategoryChip = ({ category, isSelected, onPress }: CategoryChipProps) => {
-  const isDark = (useColorScheme() ?? 'dark') === 'dark';
-  const theme = isDark ? TOKENS.colors.dark : TOKENS.colors.light;
+  const { theme, isDark } = useAppTheme();
+  const selectedTextColor = (category.id === 'all' && isDark) ? theme.background : '#FFFFFF';
 
   return (
     <TouchableOpacity
       onPress={onPress}
+      activeOpacity={0.7}
       style={[
         styles.chip,
         { backgroundColor: theme.surface },
@@ -27,13 +29,13 @@ export const CategoryChip = ({ category, isSelected, onPress }: CategoryChipProp
       <MaterialCommunityIcons 
         name={category.icon as any} 
         size={18} 
-        color={isSelected ? '#FFFFFF' : category.color} 
+        color={isSelected ? selectedTextColor : category.color} 
         style={styles.icon}
       />
       <Text style={[
         styles.label,
         { color: theme.primary },
-        isSelected && { color: '#FFFFFF', fontWeight: '700' }
+        isSelected && { color: selectedTextColor, fontWeight: '700' }
       ]}>
         {category.name}
       </Text>

@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, TextInput, StyleSheet, TextInputProps, useColorScheme } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TextInputProps } from 'react-native';
 import { TOKENS } from '../../theme/tokens';
+import { useAppTheme } from '../../hooks/useAppTheme';
 
 interface InputFieldProps extends TextInputProps {
   label: string;
@@ -9,8 +10,7 @@ interface InputFieldProps extends TextInputProps {
 }
 
 export const InputField = ({ label, error, leftIcon, ...props }: InputFieldProps) => {
-  const isDark = (useColorScheme() ?? 'dark') === 'dark';
-  const theme = isDark ? TOKENS.colors.dark : TOKENS.colors.light;
+  const { theme } = useAppTheme();
 
   return (
     <View style={styles.container}>

@@ -1,9 +1,10 @@
 import React from 'react';
-import { View, Text, StyleSheet, Pressable, useColorScheme } from 'react-native';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { format } from 'date-fns';
 import { useExpenseStore, Transaction } from '../../store/expenseStore';
 import { TOKENS } from '../../theme/tokens';
+import { useAppTheme } from '../../hooks/useAppTheme';
 
 interface Props {
   transaction: Transaction;
@@ -12,8 +13,7 @@ interface Props {
 }
 
 export const TransactionItem = ({ transaction, onPress, onLongPress }: Props) => {
-  const isDark = (useColorScheme() ?? 'dark') === 'dark';
-  const theme = isDark ? TOKENS.colors.dark : TOKENS.colors.light;
+  const { theme } = useAppTheme();
   
   const categories = useExpenseStore((state) => state.categories);
   const category = categories.find((c) => c.id === transaction.categoryId);

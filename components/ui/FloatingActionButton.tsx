@@ -1,16 +1,16 @@
 import React from 'react';
-import { StyleSheet, Pressable, useColorScheme } from 'react-native';
+import { StyleSheet, Pressable } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { TOKENS } from '../../theme/tokens';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useAppTheme } from '../../hooks/useAppTheme';
 
 interface Props {
   onPress: () => void;
 }
 
 export const FloatingActionButton = ({ onPress }: Props) => {
-  const isDark = (useColorScheme() ?? 'dark') === 'dark';
-  const theme = isDark ? TOKENS.colors.dark : TOKENS.colors.light;
+  const { theme } = useAppTheme();
 
   return (
     <Pressable

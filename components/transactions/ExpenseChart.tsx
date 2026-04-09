@@ -1,16 +1,32 @@
 import React, { useMemo } from 'react';
-import { View, Text, StyleSheet, useColorScheme } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { PieChart } from 'react-native-gifted-charts';
 import { useExpenseStore } from '../../store/expenseStore';
 import { TOKENS } from '../../theme/tokens';
+import { useAppTheme } from '../../hooks/useAppTheme';
 
 export const ExpenseChart = () => {
-  const isDark = (useColorScheme() ?? 'dark') === 'dark';
-  const theme = isDark ? TOKENS.colors.dark : TOKENS.colors.light;
+  const { theme } = useAppTheme();
 
-  const transactions = useExpenseStore(state => state.getCurrentMonthTransactions());
+  const rawTransactions = useExpenseStore(state => state.transactions);
   const categories = useExpenseStore(state => state.categories);
-  const currentMonthExpense = useExpenseStore(state => state.getCurrentMonthExpense());
+
+  const { transactions, currentMonthExpense } = useMemo(() => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth();
+    
+    const monthlyItems = rawTransactions.filter(t => {
+      const tDate = new Date(t.date);
+      return tDate.getFullYear() === year && tDate.getMonth() === month;
+    });
+
+    const totalExpense = monthlyItems
+      .filter(t => t.type === 'expense')
+      .reduce((sum, t) => sum + t.amount, 0);
+
+    return { transactions: monthlyItems, currentMonthExpense: totalExpense };
+  }, [rawTransactions]);
 
   const chartData = useMemo(() => {
     const expenses = transactions.filter(t => t.type === 'expense');
@@ -59,7 +75,7 @@ export const ExpenseChart = () => {
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: TOKENS.spacing.xl,
+    // marginHorizontal: TOKENS.spacing.xl,
     padding: TOKENS.spacing.xl,
     borderRadius: TOKENS.radius.lg,
     marginBottom: TOKENS.spacing.xl,

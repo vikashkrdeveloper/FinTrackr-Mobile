@@ -1,12 +1,11 @@
 import React from 'react';
-import { View, Text, StyleSheet, useColorScheme } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { colors } from '../../theme/colors';
+import { useAppTheme } from '../../hooks/useAppTheme';
 import { useExpenseStore } from '../../store/expenseStore';
 
 export const BalanceCard = () => {
-  const colorScheme = useColorScheme() ?? 'light';
-  const theme = colors[colorScheme];
+  const { theme } = useAppTheme();
   
   const balance = useExpenseStore((state) => state.getBalance());
   const income = useExpenseStore((state) => state.getTotalIncome());
@@ -18,7 +17,7 @@ export const BalanceCard = () => {
 
   return (
     <LinearGradient
-      colors={[theme.gradientStart, theme.gradientEnd]}
+      colors={theme.cardGradient}
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
       style={styles.container}

@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { View, Text, StyleSheet, FlatList, useColorScheme, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, FlatList, ScrollView, TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useExpenseStore } from '../../store/expenseStore';
 import { TOKENS } from '../../theme/tokens';
@@ -11,11 +11,14 @@ import { FloatingActionButton } from '../../components/ui/FloatingActionButton';
 import { CategoryChip } from '../../components/ui/CategoryChip';
 import { NotificationBell } from '../../components/ui/NotificationBell';
 import { useAuthStore } from '../../store/authStore';
+import { useAppTheme } from '../../hooks/useAppTheme';
+
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default function HomeScreen() {
   const router = useRouter();
-  const isDark = (useColorScheme() ?? 'dark') === 'dark';
-  const theme = isDark ? TOKENS.colors.dark : TOKENS.colors.light;
+  const { theme } = useAppTheme();
   
   const { user } = useAuthStore();
   const firstName = user?.user_metadata?.full_name?.split(' ')[0] || 'User';
@@ -36,13 +39,24 @@ export default function HomeScreen() {
 
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
 
-  const displayedTransactions = useMemo(() => {
+  const filteredTransactions = useMemo(() => {
     if (!selectedCategoryId) return transactions;
     return transactions.filter(t => t.categoryId === selectedCategoryId);
   }, [transactions, selectedCategoryId]);
 
+  // Limit to max 12 for Home Screen
+  const displayedTransactions = useMemo(() => {
+    return filteredTransactions.slice(0, 12);
+  }, [filteredTransactions]);
+
+  const hasRemainingTransactions = filteredTransactions.length > 12;
+
+  const handleViewAll = () => {
+    router.replace('/(tabs)/transactions' as any);
+  };
+
   return (
-    <View style={[styles.container, { backgroundColor: theme.background }]}>
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
       <FlatList
         data={displayedTransactions}
         keyExtractor={(item) => item.id}
@@ -86,6 +100,12 @@ export default function HomeScreen() {
               <Text style={[styles.sectionTitle, { color: theme.primary }]}>
                 {selectedCategoryId ? 'Filtered Transactions' : 'Recent Transactions'}
               </Text>
+              {hasRemainingTransactions && (
+                <TouchableOpacity onPress={handleViewAll} style={styles.viewAllBtn}>
+                  <Text style={[styles.viewAllText, { color: theme.accent }]}>View All</Text>
+                  <MaterialCommunityIcons name="chevron-right" size={18} color={theme.accent} />
+                </TouchableOpacity>
+              )}
             </View>
             
             {displayedTransactions.length === 0 && (
@@ -105,7 +125,7 @@ export default function HomeScreen() {
         )}
       />
       <FloatingActionButton onPress={() => router.push('/add-transaction' as any)} />
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -142,10 +162,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: TOKENS.spacing.lg,
+    marginBottom: TOKENS.spacing.xs,
+    marginTop: TOKENS.spacing.lg,
   },
   sectionTitle: {
     ...TOKENS.typography.subheading,
+  },
+  viewAllBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 2,
+  },
+  viewAllText: {
+    ...TOKENS.typography.caption,
+    fontWeight: '700',
   },
   emptyState: {
     padding: 40,
