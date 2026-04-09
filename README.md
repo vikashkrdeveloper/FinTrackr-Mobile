@@ -1,8 +1,6 @@
-# 💎 FinTrackr – Premium Smart Expense Manager
+# FinTrackr - Finance Manager
 
-FinTrackr is a production-grade, offline-first mobile application built with **React Native** and **Expo**. It provides a premium, high-performance experience for tracking daily expenses, visualizing financial health through animated charts, and managing categories with full cloud sync via Supabase.
-
----
+FinTrackr is a modern fintech-style mobile application built with React Native and Expo. It allows users to manage income, expenses, and monthly financial summaries with a premium UI.
 
 ## 📱 App Preview
 
@@ -10,101 +8,98 @@ FinTrackr is a production-grade, offline-first mobile application built with **R
 | :---: | :---: | :---: | :---: |
 | ![Dashboard](./assets/images/preview/1-dashboard.png) | ![History](./assets/images/preview/2-history.png) | ![Add Transaction](./assets/images/preview/3-add-transaction.png) | ![Profile](./assets/images/preview/4-profile.png) |
 
----
-
-### Authentication Screens
+### Authentication
 
 | Login | Register |
 | :---: | :---: |
 | ![Login](./assets/images/preview/5-login.png) | ![Register](./assets/images/preview/6-register.png) |
 
-> [!TIP]
-> **To add your own screenshots:** Replace the placeholder URLs above with your actual image paths from assets or external hosting.
+---
+
+## 🛠 Assignment Requirements Checklist
+
+### Core Requirements
+- [x] Gradient-based UI (Fintech style)
+- [x] Dark / Light mode toggle
+- [x] Bottom Tab Navigation (3+ tabs)
+- [x] Animations (Micro-interactions & screen transitions)
+- [x] Keyboard handling (Smooth form UX)
+- [x] Build Delivery (EAS build instructions)
+- [x] Proper GitHub Repository & Documentation
+
+### Feature Requirements
+- [x] Add Income / Expense transactions
+- [x] Transaction fields: amount, category, date, note
+- [x] Form validation
+- [x] Category-based tracking (Visual distinction)
+- [x] Monthly summary (Income, Expenses, Balance)
+- [x] Local storage (SQLite & AsyncStorage)
+
+### Bonus Features
+- [x] Animated pie charts and graphs
+- [x] Swipe gestures for interactions
+- [x] Smart empty states
 
 ---
 
-## 🌟 Key Features
+## Tech Stack
 
-- **🚀 Performance-First**: Multi-threaded animations and optimized data layer using SQLite.
-- **✨ Premium Branding**: Custom-designed high-resolution icons and splash screens with a modern Emerald & Charcoal aesthetic.
-- **🛡️ Industry-Grade Logging**: Centralized pipeline capturing global console logs and JS crashes via `ErrorUtils`.
-- **💾 Stable Storage**: Hybrid storage architecture using **SQLite** as the primary Supabase adapter for maximum reliability.
-- **🎨 Manual Theme Switcher**: Toggle between **Light**, **Dark**, and **System Sync** directly from the Profile settings.
-- **📊 Animated Visualizations**: Interactive Donut Pie Charts for category-based spending breakdown.
-- **☁️ Cloud Authentication**: Secure login and profile management powered by **Supabase**.
-- **📤 Data Export**: Export entire financial history to **CSV** via the native share sheet.
-- **💎 Premium UI**: Token-based design system with specific HSL-tailored colors and smooth micro-interactions.
-
----
-
-## 🛠️ Tech Stack
-
-- **Core**: React Native, Expo (SDK 55)
-- **Navigation**: Expo Router (Typed File-based)
-- **State Management**: Zustand (+ Persistent Storage)
-- **Backend/Auth**: Supabase
-- **Storage Layer**: SQLite (Supabase Adapter) + AsyncStorage (Zustand)
-- **Logging**: Centralized Class-based Logger + ErrorUtils
-- **Visuals**: Gifted Charts, Expo Linear Gradient, Reanimated
-- **Icons**: Expo Vector Icons (Material Community)
+- **Framework**: React Native with Expo (SDK 55)
+- **Navigation**: Expo Router (File-based)
+- **Backend & Database**: **Supabase** (PostgreSQL)
+- **State**: Zustand with persistence
+- **Storage**: SQLite and AsyncStorage (Local-first caching)
+- **Animations**: Reanimated and Expo Linear Gradient
+- **Charts**: Gifted Charts
+- **Icons**: Expo Vector Icons
 
 ---
 
-## 🚀 Getting Started
+## Backend Architecture
 
-### 1. Prerequisites
+FinTrackr uses a hybrid backend-local storage model:
+- **Supabase Auth**: Secure user authentication and session management.
+- **Supabase Database**: Real-time synchronization of transactions across devices.
+- **SQLite Persistence**: Used as a robust alternative to AsyncStorage for Supabase's offline auth state.
+- **Zustand Persist**: Local caching for an instantaneous, offline-available UI.
+
+---
+
+## Setup & Installation
+
+### Prerequisites
 - Node.js (LTS)
-- Expo Go app on your mobile device (for development)
-- A Supabase account
+- Expo Go app for testing
+- EAS CLI (for builds)
 
-### 2. Installation
-```bash
-# Recommended Repository Name: FinTrackr-Expo
-git clone https://github.com/your-username/FinTrackr-Expo.git
-
-# Install dependencies
-npm install
-```
-
-### 3. Environment Setup
-Create a `.env` file in the root directory and add your Supabase credentials:
-```env
-EXPO_PUBLIC_SUPABASE_URL=your-supabase-url
-EXPO_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
-```
-
-### 4. Running the App
-```bash
-# Start the development server
-npx expo start -c
-```
-
----
-
-## 📦 Building for Production
-
-To generate an APK for Android:
-1. Install EAS CLI: `npm install -g eas-cli`
-2. Configure the build: `eas build:configure`
-3. Run the build:
+### Installation Steps
+1. Clone the repository:
    ```bash
-   eas build -p android --profile preview
+   git clone https://github.com/vikashkrdeveloper/FinTrackr-Mobile.git
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Create a `.env` file with Supabase credentials (optional for cloud sync):
+   ```env
+   EXPO_PUBLIC_SUPABASE_URL=your-url
+   EXPO_PUBLIC_SUPABASE_ANON_KEY=your-key
+   ```
+4. Start the development server:
+   ```bash
+   npx expo start -c
    ```
 
 ---
 
-## 📂 Project Structure
+## 👨‍💻 Author
 
-- `app/`: Expo Router screens and layouts.
-- `components/`: Reusable UI modules (Cards, Buttons, Charts).
-- `store/`: Zustand stores for global state (Auth, Expenses).
-- `lib/`: Utility functions (Supabase client, Export logic).
-- `hooks/`: Custom hooks (Theme resolution, Debounce).
-- `theme/`: Centralized design system (standardized colors, spacing, typography).
-- `assets/`: Custom branding assets (icons, splash screens).
+- **Vikash Kumar**
+- LinkedIn: [linkedin.com/in/vikashkrdeveloper](https://linkedin.com/in/vikashkrdeveloper)
 
 ---
 
 ## 📄 License
-MIT License.
+MIT License
 

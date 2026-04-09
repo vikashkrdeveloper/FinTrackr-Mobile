@@ -192,7 +192,7 @@ export default function HistoryScreen() {
         renderItem={({ item }) => (
           <TransactionItem 
             transaction={item} 
-            onLongPress={() => deleteTransaction(item.id)} 
+            onDelete={() => deleteTransaction(item.id)} 
           />
         )}
       />

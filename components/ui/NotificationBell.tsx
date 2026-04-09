@@ -2,7 +2,6 @@ import React from 'react';
 import { TouchableOpacity, View, StyleSheet } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import { TOKENS } from '../../theme/tokens';
 import { useAppTheme } from '../../hooks/useAppTheme';
 
 export const NotificationBell = () => {

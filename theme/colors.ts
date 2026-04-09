@@ -6,9 +6,9 @@
 export const colors = {
   // Brand & Semantic Colors
   brand: {
-    teal: '#50BFA5',
-    tealDark: '#3DA58D',
-    tealLight: '#6FD2BA',
+    emerald: '#10B981',
+    emeraldDark: '#059669',
+    emeraldLight: '#34D399',
   },
   
   // Light Palette
@@ -21,9 +21,9 @@ export const colors = {
     error: '#EF4444',
   },
 
-  // Dark Palette (True Dark Aesthetic)
+  // Dark Palette (True Fintech Aesthetic)
   dark: {
-    background: '#000000',
+    background: '#0F0F0F',
     surface: '#1A1A1A',
     surfaceLighter: '#2A2A2A',
     textPrimary: '#FFFFFF',

@@ -110,9 +110,21 @@ export default function HomeScreen() {
             
             {displayedTransactions.length === 0 && (
               <View style={styles.emptyState}>
-                <Text style={[styles.emptyStateText, { color: theme.secondary }]}>
-                  No transactions found. Add one!
+                <View style={[styles.emptyIconContainer, { backgroundColor: theme.surfaceLighter }]}>
+                  <MaterialCommunityIcons name="receipt-text-plus-outline" size={48} color={theme.secondary} />
+                </View>
+                <Text style={[styles.emptyStateTitle, { color: theme.primary }]}>
+                  No Transactions Yet
                 </Text>
+                <Text style={[styles.emptyStateText, { color: theme.secondary }]}>
+                  Start your financial journey by adding your first income or expense today.
+                </Text>
+                <TouchableOpacity 
+                  style={[styles.emptyStateBtn, { backgroundColor: theme.accent }]}
+                  onPress={() => router.push('/add-transaction' as any)}
+                >
+                  <Text style={[styles.emptyStateBtnText, { color: theme.background }]}>Add Transaction</Text>
+                </TouchableOpacity>
               </View>
             )}
           </>
@@ -120,7 +132,7 @@ export default function HomeScreen() {
         renderItem={({ item }) => (
           <TransactionItem 
             transaction={item} 
-            onLongPress={() => deleteTransaction(item.id)} 
+            onDelete={() => deleteTransaction(item.id)} 
           />
         )}
       />
@@ -178,12 +190,44 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   emptyState: {
-    padding: 40,
+    padding: 20,
+    marginTop: 40,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  emptyIconContainer: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: TOKENS.spacing.lg,
+  },
+  emptyStateTitle: {
+    ...TOKENS.typography.heading,
+    fontSize: 20,
+    marginBottom: TOKENS.spacing.sm,
+    textAlign: 'center',
   },
   emptyStateText: {
     ...TOKENS.typography.body,
     textAlign: 'center',
+    marginBottom: TOKENS.spacing.xl,
+    paddingHorizontal: TOKENS.spacing.xl,
+    opacity: 0.7,
+  },
+  emptyStateBtn: {
+    paddingHorizontal: 32,
+    paddingVertical: 14,
+    borderRadius: TOKENS.radius.round,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
+    elevation: 4,
+  },
+  emptyStateBtnText: {
+    ...TOKENS.typography.body,
+    fontWeight: '700',
   },
 });

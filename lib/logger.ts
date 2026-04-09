@@ -74,7 +74,7 @@ class LoggerService {
   private async sendToServer(logData: any) {
     try {
       // Placeholder for production monitoring (e.g., Sentry, Firebase, or custom API)
-    } catch (err) {
+    } catch {
       // Silent fail for transport issues
     }
   }

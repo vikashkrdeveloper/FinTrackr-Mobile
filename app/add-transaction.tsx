@@ -70,7 +70,7 @@ export default function TransactionsScreen() {
       setNote('');
       setDate(new Date());
       router.replace('/(tabs)');
-    } catch (error) {
+    } catch {
       Alert.alert('Error', 'Failed to save transaction. Please try again.');
     } finally {
       setIsSaving(false);
@@ -95,7 +95,7 @@ export default function TransactionsScreen() {
 
       setShowCategoryModal(false);
       setNewCatName('');
-    } catch (error) {
+    } catch {
       Alert.alert('Error', 'Failed to create category.');
     } finally {
       setIsSavingCategory(false);

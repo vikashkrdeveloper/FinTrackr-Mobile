@@ -8,9 +8,9 @@ export const TOKENS = {
       surfaceLighter: colors.dark.surfaceLighter,
       primary: colors.dark.textPrimary,
       secondary: colors.dark.textSecondary,
-      accent: colors.brand.teal,
+      accent: colors.brand.emerald,
       error: colors.dark.error,
-      cardGradient: [colors.brand.tealDark, colors.brand.teal] as [string, string],
+      cardGradient: [colors.brand.emeraldDark, colors.brand.emerald] as [string, string],
     },
     light: {
       background: colors.light.background,
@@ -18,9 +18,9 @@ export const TOKENS = {
       surfaceLighter: colors.light.surfaceLighter,
       primary: colors.light.textPrimary,
       secondary: colors.light.textSecondary,
-      accent: colors.brand.teal,
+      accent: colors.brand.emerald,
       error: colors.light.error,
-      cardGradient: [colors.brand.teal, colors.brand.tealLight] as [string, string],
+      cardGradient: [colors.brand.emerald, colors.brand.emeraldLight] as [string, string],
     }
   },
   typography: {

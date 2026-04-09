@@ -1,18 +1,53 @@
 import React from 'react';
-import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Dimensions } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { format } from 'date-fns';
 import { useExpenseStore, Transaction } from '../../store/expenseStore';
 import { TOKENS } from '../../theme/tokens';
 import { useAppTheme } from '../../hooks/useAppTheme';
+import ReanimatedSwipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
+import Reanimated, { 
+  SharedValue, 
+  useAnimatedStyle, 
+  interpolate,
+  Extrapolation
+} from 'react-native-reanimated';
+
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 interface Props {
   transaction: Transaction;
   onPress?: () => void;
-  onLongPress?: () => void;
+  onDelete?: () => void;
 }
 
-export const TransactionItem = ({ transaction, onPress, onLongPress }: Props) => {
+const RightAction = (
+  prog: SharedValue<number>, 
+  drag: SharedValue<number>,
+  onDelete?: () => void
+) => {
+  const styleAnimation = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateX: interpolate(drag.value, [-100, 0], [0, 100], Extrapolation.CLAMP) }],
+    };
+  });
+
+  return (
+    <Reanimated.View style={[styleAnimation, styles.rightActionContainer]}>
+      <Pressable 
+        style={({ pressed }) => [
+          styles.deleteBtn, 
+          { opacity: pressed ? 0.8 : 1 }
+        ]} 
+        onPress={onDelete}
+      >
+        <MaterialCommunityIcons name="trash-can-outline" size={24} color="#FFFFFF" />
+      </Pressable>
+    </Reanimated.View>
+  );
+};
+
+export const TransactionItem = ({ transaction, onPress, onDelete }: Props) => {
   const { theme } = useAppTheme();
   
   const categories = useExpenseStore((state) => state.categories);
@@ -20,20 +55,25 @@ export const TransactionItem = ({ transaction, onPress, onLongPress }: Props) =>
   
   const isIncome = transaction.type === 'income';
   
-  // Fallback if category was deleted but transaction remains
   const iconName = category?.icon || 'help-circle';
   const categoryName = category?.name || 'Unknown';
   const categoryColor = category?.color || theme.secondary;
 
   return (
-    <Pressable
-      onPress={onPress}
-      onLongPress={onLongPress}
-      style={({ pressed }) => [
-        { opacity: pressed ? 0.7 : 1 }
-      ]}
+    <ReanimatedSwipeable
+      friction={2}
+      enableTrackpadTwoFingerGesture
+      rightThreshold={40}
+      renderRightActions={(prog, drag) => RightAction(prog, drag, onDelete)}
+      containerStyle={styles.swipeContainer}
     >
-      <View style={[styles.container, { backgroundColor: theme.surface }]}>
+      <Pressable
+        onPress={onPress}
+        style={({ pressed }) => [
+          styles.content,
+          { backgroundColor: theme.surface, opacity: pressed ? 0.9 : 1 }
+        ]}
+      >
         <View style={styles.leftContent}>
           <View style={[styles.iconContainer, { backgroundColor: `${categoryColor}20` }]}>
             <MaterialCommunityIcons 
@@ -43,8 +83,8 @@ export const TransactionItem = ({ transaction, onPress, onLongPress }: Props) =>
             />
           </View>
           <View style={styles.details}>
-            <Text style={[styles.category, { color: theme.primary }]}>{categoryName}</Text>
-            <Text style={[styles.date, { color: theme.secondary }]}>
+            <Text numberOfLines={1} style={[styles.category, { color: theme.primary }]}>{categoryName}</Text>
+            <Text numberOfLines={1} style={[styles.date, { color: theme.secondary }]}>
               {format(new Date(transaction.date), 'MMM dd')} {transaction.note ? `• ${transaction.note}` : ''}
             </Text>
           </View>
@@ -56,19 +96,22 @@ export const TransactionItem = ({ transaction, onPress, onLongPress }: Props) =>
             </Text>
           </View>
         </View>
-      </View>
-    </Pressable>
+      </Pressable>
+    </ReanimatedSwipeable>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  swipeContainer: {
+    marginBottom: TOKENS.spacing.md,
+    overflow: 'visible',
+  },
+  content: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: TOKENS.spacing.lg,
     borderRadius: TOKENS.radius.lg,
-    marginBottom: TOKENS.spacing.md,
   },
   leftContent: {
     flexDirection: 'row',
@@ -107,4 +150,17 @@ const styles = StyleSheet.create({
     ...TOKENS.typography.body,
     fontWeight: '700',
   },
+  rightActionContainer: {
+    width: 80,
+    height: '100%',
+    paddingLeft: TOKENS.spacing.md,
+  },
+  deleteBtn: {
+    flex: 1,
+    backgroundColor: '#FF4B4B',
+    borderRadius: TOKENS.radius.lg,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
+
