@@ -1,8 +1,16 @@
 import { ExpoConfig, ConfigContext } from 'expo/config';
 
+const IS_DEV = process.env.APP_VARIANT === 'development';
+
+const THEME = {
+  primary: '#10B981',
+  background: '#0F0F0F',
+  text: '#FFFFFF',
+};
+
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
-  name: 'FinTrackr',
+  name: IS_DEV ? 'FinTrackr (Dev)' : 'FinTrackr',
   slug: 'FinTrackr',
   version: '1.0.0',
   orientation: 'portrait',
@@ -16,7 +24,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   android: {
     adaptiveIcon: {
-      backgroundColor: '#000000',
+      backgroundColor: THEME.background,
       foregroundImage: './assets/images/android-icon-foreground.png',
       backgroundImage: './assets/images/android-icon-background.png',
       monochromeImage: './assets/images/android-icon-monochrome.png',
@@ -37,9 +45,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         image: './assets/images/splash-icon.png',
         imageWidth: 200,
         resizeMode: 'contain',
-        backgroundColor: '#ffffff',
+        backgroundColor: THEME.background,
         dark: {
-          backgroundColor: '#000000',
+          backgroundColor: THEME.background,
         },
       },
     ],
@@ -56,3 +64,4 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     }
   }
 });
+
