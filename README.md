@@ -1,6 +1,6 @@
-# FinTrackr – Smart Expense Manager
+# 💎 FinTrackr – Premium Smart Expense Manager
 
-FinTrackr is a production-grade, offline-first mobile application built with **React Native** and **Expo**. It provides a premium experience for tracking daily expenses, visualizing financial health through animated charts, and managing categories with full cloud sync via Supabase.
+FinTrackr is a production-grade, offline-first mobile application built with **React Native** and **Expo**. It provides a premium, high-performance experience for tracking daily expenses, visualizing financial health through animated charts, and managing categories with full cloud sync via Supabase.
 
 ---
 
@@ -8,13 +8,17 @@ FinTrackr is a production-grade, offline-first mobile application built with **R
 
 | Dashboard | Transactions | Analytics | Profile |
 | :---: | :---: | :---: | :---: |
-| ![Dashboard](https://placehold.co/300x600/1A1A1A/FFFFFF?text=Dashboard) | ![History](https://placehold.co/300x600/1A1A1A/FFFFFF?text=History) | ![Analytics](https://placehold.co/300x600/1A1A1A/FFFFFF?text=Analytics) | ![Profile](https://placehold.co/300x600/1A1A1A/FFFFFF?text=Profile) |
+| ![Dashboard](https://placehold.co/300x600/0F0F0F/10B981?text=Dashboard) | ![History](https://placehold.co/300x600/0F0F0F/10B981?text=History) | ![Analytics](https://placehold.co/300x600/0F0F0F/10B981?text=Analytics) | ![Profile](https://placehold.co/300x600/0F0F0F/10B981?text=Profile) |
+
+> [!TIP]
+> **To add your own screenshots:** Replace the placeholder URLs above with your actual image paths from assets or external hosting.
 
 ---
 
 ## 🌟 Key Features
 
-- **🚀 Performance-First**: Multi-threaded animations and optimized data layer.
+- **🚀 Performance-First**: Multi-threaded animations and optimized data layer using SQLite.
+- **✨ Premium Branding**: Custom-designed high-resolution icons and splash screens with a modern Emerald & Charcoal aesthetic.
 - **🛡️ Industry-Grade Logging**: Centralized pipeline capturing global console logs and JS crashes via `ErrorUtils`.
 - **💾 Stable Storage**: Hybrid storage architecture using **SQLite** as the primary Supabase adapter for maximum reliability.
 - **🎨 Manual Theme Switcher**: Toggle between **Light**, **Dark**, and **System Sync** directly from the Profile settings.
@@ -27,7 +31,7 @@ FinTrackr is a production-grade, offline-first mobile application built with **R
 
 ## 🛠️ Tech Stack
 
-- **Core**: React Native, Expo (SDK 54)
+- **Core**: React Native, Expo (SDK 55)
 - **Navigation**: Expo Router (Typed File-based)
 - **State Management**: Zustand (+ Persistent Storage)
 - **Backend/Auth**: Supabase
@@ -47,8 +51,8 @@ FinTrackr is a production-grade, offline-first mobile application built with **R
 
 ### 2. Installation
 ```bash
-# Clone the repository
-git clone <your-repo-url>
+# Recommended Repository Name: FinTrackr-Expo
+git clone https://github.com/your-username/FinTrackr-Expo.git
 
 # Install dependencies
 npm install
@@ -63,6 +67,7 @@ EXPO_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
 
 ### 4. Running the App
 ```bash
+# Start the development server
 npx expo start -c
 ```
 
@@ -86,10 +91,12 @@ To generate an APK for Android:
 - `components/`: Reusable UI modules (Cards, Buttons, Charts).
 - `store/`: Zustand stores for global state (Auth, Expenses).
 - `lib/`: Utility functions (Supabase client, Export logic).
-- `hooks/`: Custom hooks (Theme resolution).
+- `hooks/`: Custom hooks (Theme resolution, Debounce).
 - `theme/`: Centralized design system (standardized colors, spacing, typography).
+- `assets/`: Custom branding assets (icons, splash screens).
 
 ---
 
 ## 📄 License
 MIT License.
+
