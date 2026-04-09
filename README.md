@@ -6,9 +6,17 @@ FinTrackr is a production-grade, offline-first mobile application built with **R
 
 ## 📱 App Preview
 
-| Dashboard | Transactions | Analytics | Profile |
+| Dashboard | History | Add Transaction | Profile |
 | :---: | :---: | :---: | :---: |
-| ![Dashboard](https://placehold.co/300x600/0F0F0F/10B981?text=Dashboard) | ![History](https://placehold.co/300x600/0F0F0F/10B981?text=History) | ![Analytics](https://placehold.co/300x600/0F0F0F/10B981?text=Analytics) | ![Profile](https://placehold.co/300x600/0F0F0F/10B981?text=Profile) |
+| ![Dashboard](./assets/images/preview/1-dashboard.png) | ![History](./assets/images/preview/2-history.png) | ![Add Transaction](./assets/images/preview/3-add-transaction.png) | ![Profile](./assets/images/preview/4-profile.png) |
+
+---
+
+### Authentication Screens
+
+| Login | Register |
+| :---: | :---: |
+| ![Login](./assets/images/preview/5-login.png) | ![Register](./assets/images/preview/6-register.png) |
 
 > [!TIP]
 > **To add your own screenshots:** Replace the placeholder URLs above with your actual image paths from assets or external hosting.
