@@ -2,11 +2,15 @@
 
 FinTrackr is a modern fintech-style mobile application built with React Native and Expo. It allows users to manage income, expenses, and monthly financial summaries with a premium UI.
 
-## 📱 App Preview
+## App Preview
 
 | Dashboard | History | Add Transaction | Profile |
 | :---: | :---: | :---: | :---: |
 | ![Dashboard](./assets/images/preview/1-dashboard.png) | ![History](./assets/images/preview/2-history.png) | ![Add Transaction](./assets/images/preview/3-add-transaction.png) | ![Profile](./assets/images/preview/4-profile.png) |
+
+> [!TIP]
+> [**Watch App Demo Video**](https://drive.google.com/file/d/15dPVJpA_WKEPEnMctplCOg6zgVhiKBMO/view) | [**Download Android APK**](https://drive.google.com/file/d/1ixsT5kjG00xRv9eQhO_ClR9aV8_wcLc_/view)
+
 
 ### Authentication
 
@@ -16,7 +20,7 @@ FinTrackr is a modern fintech-style mobile application built with React Native a
 
 ---
 
-## 🛠 Assignment Requirements Checklist
+## Assignment Requirements Checklist
 
 ### Core Requirements
 - [x] Gradient-based UI (Fintech style)
@@ -62,6 +66,8 @@ FinTrackr uses a hybrid backend-local storage model:
 - **Supabase Database**: Real-time synchronization of transactions across devices.
 - **SQLite Persistence**: Used as a robust alternative to AsyncStorage for Supabase's offline auth state.
 - **Zustand Persist**: Local caching for an instantaneous, offline-available UI.
+- **API Base URL**: [https://olsyznsngxtkunyyzgkd.supabase.co](https://olsyznsngxtkunyyzgkd.supabase.co)
+
 
 ---
 
@@ -93,13 +99,13 @@ FinTrackr uses a hybrid backend-local storage model:
 
 ---
 
-## 👨‍💻 Author
+## Author
 
 - **Vikash Kumar**
 - LinkedIn: [linkedin.com/in/vikashkrdeveloper](https://linkedin.com/in/vikashkrdeveloper)
 
 ---
 
-## 📄 License
+## License
 MIT License
 
